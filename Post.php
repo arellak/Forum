@@ -5,7 +5,13 @@ class Post {
 
     public $id;
     public $author;
-    public $content = [];
+    public $title;
+    public $content;
 
-    
+    public $comments = [];
+    public $creationDate;
+
+    public function __construct() {
+
+    }
 }

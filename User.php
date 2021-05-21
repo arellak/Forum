@@ -6,6 +6,8 @@ class User {
     public $name;
     public $email;
     public $password;
+    public $registrationDate;
+    public $postCount;
 
     public static $dbName = "forum.db";
 
