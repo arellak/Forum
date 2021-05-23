@@ -19,10 +19,9 @@ class Database {
     }
 
     public function close() {
-        global $pdo;
-        if($pdo != null) {
+        if($this->pdo != null) {
             try {
-                $pdo = null;
+                $this->pdo = null;
             } catch(PDOException $e) {
                 echo "Couldn't close connection: " . $e->getMessage();
             }

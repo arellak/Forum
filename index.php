@@ -1,5 +1,6 @@
 <?php
-include_once("Database.php");
-include_once("User.php");
+include_once("SignIn.php");
 
-User::create("hurensohn", "penis", "fickerDeinerMutter@hurensohn.de");
+// User::create("Anna", "anna", "anna@anna.anna");
+
+login("testName", "testPasswo");
