@@ -1,2 +1,2 @@
-<h3>Forum für den TI Unterricht</h3>
+<h3>Forum</h3>
 Genauere Informationen folgen noch...
