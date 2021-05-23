@@ -1,4 +1,6 @@
 <?php
+
+
 include_once("Database.php");
 
 class User {
@@ -6,6 +8,8 @@ class User {
     public $name;
     public $email;
     public $password;
+    public $registrationDate;
+    public $postCount;
 
     public static $dbName = "forum.db";
 
@@ -19,9 +23,11 @@ class User {
 
         $sql = "create table if not exists user(
             id integer primary key autoincrement, 
-            name text not null,
-            password text not null,
-            email text not null)";
+            name varchar(255) not null,
+            password varchar(255) not null,
+            email varchar(255) not null,
+            registrationDate varchar(255) not null,
+            postCount numeric)";
         $stmt = $db->pdo->prepare($sql);
         $stmt->execute();
     }
@@ -29,16 +35,21 @@ class User {
     public static function create($name, $password, $email){
         User::createUserTable();
 
+        $currentDate = new DateTime();
+
         $db = new Database(User::$dbName);
         $db->connect();
 
-        $sql = "insert into user(name, password, email) values (:name, :passwd, :email)";
+        $sql = "insert into user(name, password, email, registrationDate, postCount) 
+                values (:name, :passwd, :email, :registrationDate, :postCount)";
 
         $stmt = $db->pdo->prepare($sql);
 
         $stmt->bindValue(":name", $name);
-        $stmt->bindValue(":passwd", $password);
+        $stmt->bindValue(":passwd", password_hash($password, PASSWORD_DEFAULT));
         $stmt->bindValue(":email", $email);
+        $stmt->bindValue(":registrationDate", $currentDate->format("d.m.Y H:i:s"));
+        $stmt->bindValue(":postCount", 0);
 
         $stmt->execute();
 
@@ -56,7 +67,7 @@ class User {
 
         $stmt->bindValue(":dbName", User::$dbName);
         $stmt->bindValue(":name", $name);
-        $stmt->bindValue(":password", $password);
+        $stmt->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));
         $stmt->bindValue(":email", $email);
         $stmt->bindValue(":id", $this->id);
 
@@ -103,7 +114,36 @@ class User {
         }
 
         $db->close();
+        if($user->id == null) {
+            throw new Exception("User is null.");
+        }
 
         return $user;
     }
+
+    public static function getAllUsers() {
+        $users = [];
+        User::createUserTable();
+
+        $db = new Database(User::$dbName);
+        $db->connect();
+
+        $sql = "select * from user";
+        $stmt = $db->pdo->query($sql);
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User();
+            $user->id = $row["id"];
+            $user->name = $row["name"];
+            $user->password = $row["password"];
+            $user->email = $row["email"];
+
+            $users[] = $user;
+        }
+
+        $db->close();
+
+        return $users;
+    }
+
 }
