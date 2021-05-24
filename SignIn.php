@@ -18,14 +18,19 @@ function login($username, $password) {
     $db->connect();
 
     try {
+        if($username == "" || $password == "") {
+            throw new Exception("Username or password is empty.");
+        }
+
         $user = User::loadDataByName($username);
 
         if(password_verify($password, $user->password)) {
             if(isset($_COOKIE[$username])) {
-                echo "nice.";
+                echo "Already logged in.";
             } else {
                 createCookie($username);
-                echo "penis";
+                echo "Successfully logged in.";
+                header("location:index.php");
             }
         } else {
             throw new Exception("Password is wrong.");
@@ -35,4 +40,9 @@ function login($username, $password) {
     } finally {
         $db->close();
     }
+}
+
+function logout() {
+    // TODO always calls this method when "Account" page
+    deleteCookie();
 }

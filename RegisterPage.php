@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <title>Login</title>
+    <title>Registrieren</title>
 </head>
 <body>
 <form method="post" action="RegisterPage.php" id="register">
@@ -14,9 +14,10 @@
     <label for="fEmail">E-Mail:</label><br>
     <input id="fEmail" name = "fEmail" type="text" placeholder="E-Mail"><br>
 
-    <input type="submit" value="Register" id="registerButton">
+    <input type="submit" value="Register" name="registerButton" id="registerButton">
 </form>
 
+<a href="index.php">Home<br></a>
 </body>
 
 </html>
@@ -24,8 +25,10 @@
 <?php
 include("SignIn.php");
 
-$username = $_POST["fUsername"];
-$password = $_POST["fPassword"];
-$email = $_POST["fEmail"];
+if(isset($_POST["registerButton"])) {
+    $username = $_POST["fUsername"];
+    $password = $_POST["fPassword"];
+    $email = $_POST["fEmail"];
 
-register($username, $password, $email);
+    register($username, $password, $email);
+}
