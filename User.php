@@ -17,6 +17,10 @@ class User {
 
     }
 
+    public function __toString() {
+        return $this->name . ";" . $this->email . ";" . $this->registrationDate . ";" . $this->postCount;
+    }
+
     public static function createUserTable() {
         $db = new Database(User::$dbName);
         $db->connect();
@@ -48,7 +52,7 @@ class User {
         $stmt->bindValue(":name", $name);
         $stmt->bindValue(":passwd", password_hash($password, PASSWORD_DEFAULT));
         $stmt->bindValue(":email", $email);
-        $stmt->bindValue(":registrationDate", $currentDate->format("d.m.Y H:i:s"));
+        $stmt->bindValue(":registrationDate", $currentDate->format("d.m.Y-H:i:s"));
         $stmt->bindValue(":postCount", 0);
 
         $stmt->execute();
@@ -76,7 +80,7 @@ class User {
         $db->close();
     }
 
-    public static function loadDataById($id) {
+    public static function loadDataById($id): User {
         User::createUserTable();
         $db = new Database(User::$dbName);
         $db->connect();
@@ -90,6 +94,8 @@ class User {
             $user->name = $row["name"];
             $user->password = $row["password"];
             $user->email = $row["email"];
+            $user->registrationDate = $row["registrationDate"];
+            $user->postCount = $row["postCount"];
         }
 
         $db->close();
@@ -97,7 +103,8 @@ class User {
         return $user;
     }
 
-    public static function loadDataByName($name) {
+
+    public static function loadDataByName($name): User {
         User::createUserTable();
         $db = new Database(User::$dbName);
         $db->connect();
@@ -111,17 +118,19 @@ class User {
             $user->name = $row["name"];
             $user->password = $row["password"];
             $user->email = $row["email"];
+            $user->registrationDate = $row["registrationDate"];
+            $user->postCount = $row["postCount"];
         }
 
         $db->close();
         if($user->id == null) {
-            throw new Exception("User is null.");
+            throw new Exception("Username doesn't exist.");
         }
 
         return $user;
     }
 
-    public static function getAllUsers() {
+    public static function getAllUsers(): array {
         $users = [];
         User::createUserTable();
 
@@ -137,6 +146,8 @@ class User {
             $user->name = $row["name"];
             $user->password = $row["password"];
             $user->email = $row["email"];
+            $user->registrationDate = $row["registrationDate"];
+            $user->postCount = $row["postCount"];
 
             $users[] = $user;
         }

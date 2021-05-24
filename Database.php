@@ -7,7 +7,7 @@ class Database {
         $this->path = $path;
     }
 
-    public function connect() {
+    public function connect(): PDO {
         if($this->pdo == null) {
             try {
                 $this->pdo = new PDO("sqlite:" . $this->path);

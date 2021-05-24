@@ -1,14 +1,10 @@
 <?php
 
 
-function createCookie($username) {
-    $cookieValue = "penis";
-    // return setcookie($cookieName, $cookieValue, time() + (86400 * 30), "/");
-    return setcookie($username, $cookieValue, time() + 100, "/");
+function createCookie($username): bool {
+    return setcookie("accountName", $username, time() + (86400*30), "/");
 }
 
-function isSessionExpired() {
-
+function deleteCookie(): bool {
+    return setcookie("accountName", "", time() - 1000, "/");
 }
-
-createCookie("anna");
