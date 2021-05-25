@@ -18,7 +18,7 @@
     let postCountElement = document.getElementById("postCount");
 
     let userInfos = "<?php
-            include("User.php");
+            include_once("User.php");
             $accountName = $_COOKIE["accountName"];
             if (isset($accountName)) {
                 try {

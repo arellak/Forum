@@ -23,7 +23,7 @@
 </html>
 
 <?php
-include("SignIn.php");
+include_once("SignIn.php");
 
 if(isset($_POST["registerButton"])) {
     $username = $_POST["fUsername"];

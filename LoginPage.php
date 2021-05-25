@@ -22,7 +22,7 @@
 </html>
 
 <?php
-include("SignIn.php");
+include_once("SignIn.php");
 
 if((!(isset($_COOKIE["accountName"]))) && isset($_POST["loginButton"])) {
     $username = $_POST["fUsername"];

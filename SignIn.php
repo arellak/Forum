@@ -1,8 +1,8 @@
 <?php
 
-include("Database.php");
-include("User.php");
-include("Session.php");
+include_once("Database.php");
+include_once("User.php");
+include_once("Session.php");
 
 function register($username, $password, $email) {
     try {
