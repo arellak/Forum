@@ -4,7 +4,7 @@
     <title>Registrieren</title>
 </head>
 <body>
-<form method="post" action="RegisterPage.php" id="register">
+<form method="post" action="RegisterHandling.php" id="register">
     <label for="fUsername">Username:</label><br>
     <input id="fUsername" name = "fUsername" type="text" placeholder="Username"><br>
 
@@ -21,14 +21,3 @@
 </body>
 
 </html>
-
-<?php
-include_once("SignIn.php");
-
-if(isset($_POST["registerButton"])) {
-    $username = $_POST["fUsername"];
-    $password = $_POST["fPassword"];
-    $email = $_POST["fEmail"];
-
-    register($username, $password, $email);
-}

@@ -9,6 +9,10 @@
     <p>Registration Date: <label id="registrationDate"></label></p>
     <p>Post Count: <label id="postCount"></label></p>
 
+    <form method="post" action="DeleteUser.php" id="deleteUserForm">
+        <input type="submit" value="Delete" id="deleteUser" name="deleteUser">
+    </form>
+
     <a href="index.php ">Home</a>
 
 <script>
@@ -19,10 +23,14 @@
 
     let userInfos = "<?php
             include_once("User.php");
-            $accountName = $_COOKIE["accountName"];
-            if (isset($accountName)) {
+            include_once("SignIn.php");
+            session_start();
+            $userId = getUserIdBySessionID(session_id());
+            $user = User::loadDataById($userId);
+
+            if ($user != null) {
                 try {
-                    echo User::loadDataByName($accountName);
+                    echo $user;
                 } catch (Exception $e) {
                     echo "Couldn't load User: " . $e->getMessage();
                 }
@@ -34,7 +42,6 @@
     let email = userSplitted[1];
     let registrationDate = userSplitted[2];
     let postCount = userSplitted[3];
-
 
     usernameElement.innerHTML = username;
     registrationDateElement.innerHTML = registrationDate;

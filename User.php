@@ -2,8 +2,10 @@
 
 
 include_once("Database.php");
+include_once("SignIn.php");
 
 class User {
+
     public $id;
     public $name;
     public $email;
@@ -57,7 +59,6 @@ class User {
 
         $stmt->execute();
 
-        $db->close();
     }
 
     public function update($name, $password, $email) {
@@ -77,7 +78,6 @@ class User {
 
         $stmt->execute();
 
-        $db->close();
     }
 
     public static function loadDataById($id): User {
@@ -97,8 +97,6 @@ class User {
             $user->registrationDate = $row["registrationDate"];
             $user->postCount = $row["postCount"];
         }
-
-        $db->close();
 
         return $user;
     }
@@ -122,7 +120,6 @@ class User {
             $user->postCount = $row["postCount"];
         }
 
-        $db->close();
         if($user->id == null) {
             throw new Exception("Username doesn't exist.");
         }
@@ -152,9 +149,65 @@ class User {
             $users[] = $user;
         }
 
+        return $users;
+    }
+
+    public static function deleteUser() {
+        $user = User::getUserBySessionId();
+
+        logout();
+
+        $db = new Database(User::$dbName);
+        $db->connect();
+
+        $delete = "delete from user where id = '$user->id'";
+        $stmt = $db->pdo->prepare($delete);
+        $stmt->execute();
+
+        $delete = "delete from posts where authorId = '$user->id'";
+        $stmt = $db->pdo->prepare($delete);
+        $stmt->execute();
+
+        $db->close();
+    }
+
+    public static function getUserBySessionId(): User{
+        session_start();
+        $userId = getUserIdBySessionID(session_id());
+
+        return User::loadDataById($userId);
+    }
+
+    public static function getPostCount() {
+        $db = new Database(User::$dbName);
+        $db->connect();
+
+        $userId = self::getUserBySessionId()->id;
+        $select = "select * from posts where authorId = '$userId'";
+        $stmt = $db->pdo->query($select);
+
+        $postCount = 0;
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $postCount++;
+        }
+
         $db->close();
 
-        return $users;
+        return $postCount;
+    }
+
+    public static function updatePostCount() {
+        $db = new Database(User::$dbName);
+        $db->connect();
+
+        $userId = User::getUserBySessionId()->id;
+        $postCount = User::getPostCount();
+
+        $update = "update user set postCount = $postCount where id = $userId";
+        $stmt = $db->pdo->prepare($update);
+        $stmt->execute();
+
+        $db->close();
     }
 
 }
