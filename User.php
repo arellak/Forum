@@ -11,6 +11,7 @@ class User {
     public $password;
     public $registrationDate;
     public $postCount;
+    public $avatar;
 
     public static $dbName = "forum.db";
 
@@ -32,12 +33,13 @@ class User {
             password text not null,
             email text not null,
             registrationDate text not null,
-            postCount numeric not null)";
+            postCount numeric not null,
+            avatar text)";
         $stmt = $db->pdo->prepare($sql);
         $stmt->execute();
     }
 
-    public static function create($name, $password, $email){
+    public static function create($name, $password, $email, $avatar){
         User::createUserTable();
 
         $currentDate = new DateTime();
@@ -55,7 +57,7 @@ class User {
         $stmt->bindValue(":email", $email);
         $stmt->bindValue(":registrationDate", $currentDate->format("d.m.Y-H:i:s"));
         $stmt->bindValue(":postCount", 0);
-
+        $stmt->bindValue(":avatar", $avatar);
         $stmt->execute();
 
     }
@@ -95,6 +97,7 @@ class User {
             $user->email = $row["email"];
             $user->registrationDate = $row["registrationDate"];
             $user->postCount = $row["postCount"];
+            $user->avatar = $row["avatar"];
         }
 
         return $user;
@@ -117,6 +120,7 @@ class User {
             $user->email = $row["email"];
             $user->registrationDate = $row["registrationDate"];
             $user->postCount = $row["postCount"];
+            $user->avatar = $row["avatar"];
         }
 
         if($user->id == null) {
@@ -144,6 +148,7 @@ class User {
             $user->email = $row["email"];
             $user->registrationDate = $row["registrationDate"];
             $user->postCount = $row["postCount"];
+            $user->avatar = $row["avatar"];
 
             $users[] = $user;
         }

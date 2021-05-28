@@ -22,7 +22,10 @@ $author = "von: " . User::loadDataById($post->author)->name;
 
 $showDeleteButton = "";
 
-if($post->author !== $user->id) {
+
+if($post->author === $user->id || $user->name === "admin") {
+    $showDeleteButton = "";
+} else {
     $showDeleteButton = "visibility:hidden;";
 }
 ?>

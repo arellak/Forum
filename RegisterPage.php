@@ -8,6 +8,7 @@
 <?php
 include("MenuBar.php");
 ?>
+
 <form method="post" action="RegisterHandling.php" id="register">
     <input id="fUsername" name="fUsername" class="inputTextbox" type="text" placeholder="Benutzername"><br>
     <input id="fPassword" class="inputTextbox" name="fPassword" type="password" placeholder="Passwort"><br>

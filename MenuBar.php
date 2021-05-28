@@ -14,6 +14,7 @@ try {
 } catch(Exception $e) {
 
 }
+$avatar = "";
 
 $registerValue = "";
 $registerForm = "";
@@ -22,7 +23,7 @@ $loginValue = "";
 $loginForm = "";
 
 $accountName = "";
-$accountNameVisible = "";
+$visibility = "";
 
 $registerHiddenStyle = "";
 
@@ -33,8 +34,11 @@ if($isLoggedIn) {
     $loginValue = "Abmelden";
     $loginForm = "Logout.php";
 
-    $accountName = User::getUserBySessionId()->name;
+    $user = User::getUserBySessionId();
+
+    $accountName = $user->name;
     $accountNameVisible = "";
+    $avatar = $user->avatar;
 } else {
     $registerValue = "Registrieren";
     $registerForm = "RegisterPage.php";
@@ -43,7 +47,7 @@ if($isLoggedIn) {
     $loginForm = "LoginPage.php";
 
     $accountName = "";
-    $accountNameVisible = "visibility:hidden;";
+    $visibility = "visibility:hidden;";
 }
 
 ?>
@@ -67,7 +71,7 @@ if($isLoggedIn) {
             </form>
         </li>
 
-        <li id="menubarListItem" style="float:right; <?=$accountNameVisible?>">
+        <li id="menubarListItem" style="float:right; <?=$visibility?>">
             <form method="post" action="AccountInformations.php" id="accountInformationForm">
                 <input type="submit" class="menuItem" id="accountName" value="<?=$accountName?>">
             </form>

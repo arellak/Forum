@@ -178,3 +178,8 @@ body {
     background-color: #D2525F;
     color: #2B2C33;
 }
+
+.infoLabel {
+    color: #6C7A87;
+    font-size: 1.15em;
+}

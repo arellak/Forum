@@ -8,9 +8,10 @@ try {
 
     if($title !== "" && $content !== "") {
         CustomPost::createPost($title, $content);
+        header("location:index.php");
+    } else {
+        header("location:CreatePostPage.php");
     }
-
-    header("location:index.php");
 } catch(Exception $e) {
     echo $e->getMessage();
 }
