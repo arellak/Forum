@@ -1,43 +1,66 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <title>Post</title>
+    <title>Beitrag</title>
     <meta charset="utf-8">
 </head>
 <body>
-<h2 id="title">%title%</h2>
+<?php
+include_once("MenuBar.php");
+include_once("CustomPost.php");
+include_once("User.php");
+include_once("Comment.php");
 
+$postId = $_GET["id"];
+$post = CustomPost::getPostById($postId);
+
+$user = User::getUserBySessionId();
+
+$title = $post->title;
+$content = $post->content;
+$author = "von: " . User::loadDataById($post->author)->name;
+
+$showDeleteButton = "";
+
+if($post->author !== $user->id) {
+    $showDeleteButton = "visibility:hidden;";
+}
+?>
+
+<h1 class="postHeader"><?=$title?></h1>
+<hr>
 <p id="content">
-    %content%
+    <?=$content?>
 </p>
 
-<p id="author">%author%</p>
+<br>
+<p id="author"><?=$author?></p>
+<br>
 
-<script>
-    let title = document.getElementById("title");
-    let content = document.getElementById("content");
-    let author = document.getElementById("author");
+<form method="post" action="DeletePost.php" id="deletePostForm" style="<?=$showDeleteButton?>">
+    <input type="hidden" id="postId" name="postId" value="<?=$postId?>" readonly>
+    <input type="submit" id="deletePost" value="Löschen" name="deletePost">
+</form>
 
-    let post = "<?php
-            include_once("Post.php");
-            echo Post::getPostById($_GET["id"]);
-        ?>";
+<form method="post" action="CreateCommentAction.php" id="commentForm">
+    <input type="hidden" id="postId" name="postId" value="<?=$postId?>" readonly>
+    <input type="text" placeholder="Inhalt" name="commentField" id="commentField" class="inputTextbox">
+    <input type="submit" value="Kommentieren" id="commentButton" name="commentButton" class="submitButton">
+</form>
 
-    let postSplit = post.split(";");
+<div id="commentDiv">
+    <h2 class="commentHeader">Kommentare</h2>
+    <?php
+    include_once("Comment.php");
+    $postId = $_GET["id"];
 
-    let authorName = "<?php
-            include_once("Post.php");
-            include_once("User.php");
-            $post = Post::getPostById($_GET["id"]);
-            $user = User::loadDataById($post->author);
-            echo $user->name;
-        ?>"
-
-    title.innerHTML = postSplit[1];
-    content.innerHTML = postSplit[2];
-    author.innerHTML = "by: " + authorName;
-
-</script>
+    $comments = Comment::getAllComments($postId);
+    foreach($comments as $comment) {
+        echo "<p id='commentAuthor'>$comment->authorName</p>";
+        echo "<p id='commentContent'>$comment->content</p>";
+    }
+    ?>
+</div>
 
 </body>
 </html>

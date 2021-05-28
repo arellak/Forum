@@ -1,0 +1,180 @@
+.submitButton {
+    font-family: Hack;
+    padding: 5px 15px;
+    background: #2C3034;
+    border: 0 none;
+    cursor: pointer;
+    border-radius: 0.75em;
+    margin-right: 0.25em;
+    width: 10em;
+    height: 2.5em;
+    color: #6C7A87;
+}
+
+.submitButton:hover {
+    background-color: #34383C;
+    transition: background-color 0.5s;
+}
+
+body {
+    font-family: Hack;
+    background-color: #202428;
+}
+
+#menuDiv {
+    padding: 2%;
+}
+
+#menubar {
+    font-family: Hack;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #2C3034;
+    right: 0.05%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    height: 7%;
+    text-align-last:justify;
+}
+
+#menubarListItem {
+    text-align:center;
+    font-family: Hack;
+    float: left;
+    border-right: 2px solid #2B2C33;
+    height: 100%;
+    display:inline-block;
+}
+
+#menubarListItem:last-child {
+    font-family: Hack;
+    border-right: 2px solid #2B2C33;
+    border-left: 2px solid #2B2C33;
+    text-align:center;
+    height: 100%;
+    display:inline-block;
+}
+
+.menuItem {
+    font-weight: bold;
+    font-family: Hack;
+    color: #9D9E9E;
+    font-size: 1.3em;
+    display: block;
+    padding: 22px 22px 22px 22px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0 none;
+
+    background-color: #2C3034;
+
+    text-align:center;
+    display:inline-block;
+}
+
+.menuItem:hover {
+    transition: background-color 0.5s;
+    background-color: #34383C;
+    color: #6C7A87;
+}
+
+.inputTextbox {
+    font-family: Hack;
+    color: white;
+    width: 60%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+
+    border: none;
+    transition: border-bottom 0.3s;
+    border-bottom: 2px solid #535353;
+
+    background-color: #2C3034;
+    resize: none;
+}
+
+.inputTextbox::placeholder {
+    color: #d1d1d1;
+}
+
+.inputTextbox:focus {
+    border: none;
+    outline: none;
+    transition: border-bottom 0.3s;
+    border-bottom: 2px solid #DE6073;
+}
+
+#contentTf {
+    height: 10em;
+    padding: 12px 20px;
+}
+
+#contentHeader {
+    color: #838E95;
+}
+
+#postLink {
+    color: #6C7A87;
+    transition: font-size 0.5s;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+#postLink:hover {
+    color: #838E95;
+    transition: font-size 0.5s;
+    font-size: 1.1em;
+}
+
+.postHeader {
+    padding-top: 10px;
+    text-align: center;
+    color: #8C9399;
+}
+
+.commentHeader {
+    color: #6C7A87;
+}
+
+#author {
+    color: #8C9399;
+}
+
+#content {
+    text-align: center;
+    color: #6C7A87;
+}
+
+#commentAuthor {
+    color: #596874;
+}
+
+#commentContent {
+    font-size: 0.8em;
+    color: #6C7A87;
+}
+
+#deletePost {
+    transition: background-color 0.3s, color 0.3s;
+    font-family: Hack;
+    padding: 5px 15px;
+    background: #2C3034;
+    border: 0 none;
+    cursor: pointer;
+    border-radius: 0.75em;
+    margin-right: 0.25em;
+    width: 10em;
+    height: 2.5em;
+    color: #6C7A87;
+}
+
+#deletePost:hover {
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #D2525F;
+    color: #2B2C33;
+}

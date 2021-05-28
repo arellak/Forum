@@ -4,32 +4,19 @@
     <title>Login</title>
 </head>
 <body>
+<?php
+include_once("MenuBar.php");
+?>
 
 <form method="post" action="LoginHandling.php" id="loginForm">
-    <label for="fUsername">Username:</label><br>
-    <input id="fUsername" name ="fUsername" type="text" placeholder="Username"><br>
+    <input id="fUsername" class="inputTextbox" name ="fUsername" type="text" placeholder="Benutzername"><br>
 
-    <label for="fPassword">Password:</label><br>
-    <input id="fPassword" name ="fPassword" type="password" placeholder="Password"><br>
-    <input type="submit" value="Login" name="loginButton" id="loginButton">
+    <input id="fPassword" class="inputTextbox"  name ="fPassword" type="password" placeholder="Passwort"><br>
+
+    <input type="submit" value="Login" name="loginButton" id="loginButton" class="submitButton">
 </form>
 
-<a href="index.php">Home<br></a>
 
 </body>
 
 </html>
-
-<?php
-/*include_once("SignIn.php");
-
-if((!(isset($_COOKIE["accountName"]))) && isset($_POST["loginButton"])) {
-$username = $_POST["fUsername"];
-$password = $_POST["fPassword"];
-
-login($username, $password);
-
-}
-*/
-
-?>

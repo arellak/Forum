@@ -1,8 +1,6 @@
 <?php
 
-include("User.php");
+include_once("User.php");
 
-echo "test1";
-echo User::deleteUser();
-echo "test2";
+User::deleteUser();
 header("location:index.php");

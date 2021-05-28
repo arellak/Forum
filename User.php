@@ -1,6 +1,5 @@
 <?php
 
-
 include_once("Database.php");
 include_once("SignIn.php");
 
@@ -29,11 +28,11 @@ class User {
 
         $sql = "create table if not exists user(
             id integer primary key autoincrement, 
-            name varchar(255) not null,
-            password varchar(255) not null,
-            email varchar(255) not null,
-            registrationDate varchar(255) not null,
-            postCount numeric)";
+            name text not null,
+            password text not null,
+            email text not null,
+            registrationDate text not null,
+            postCount numeric not null)";
         $stmt = $db->pdo->prepare($sql);
         $stmt->execute();
     }
@@ -168,14 +167,23 @@ class User {
         $stmt = $db->pdo->prepare($delete);
         $stmt->execute();
 
+        $delete = "delete from comments where authorId = '$user->id'";
+        $stmt = $db->pdo->prepare($delete);
+        $stmt->execute();
+
         $db->close();
     }
 
-    public static function getUserBySessionId(): User{
+    public static function getUserBySessionId(){
         session_start();
         $userId = getUserIdBySessionID(session_id());
+        $user = User::loadDataById($userId);
 
-        return User::loadDataById($userId);
+        if($user === null || $userId === "") {
+            throw new Exception("");
+        }
+
+        return $user;
     }
 
     public static function getPostCount() {
@@ -201,6 +209,19 @@ class User {
         $db->connect();
 
         $userId = User::getUserBySessionId()->id;
+        $postCount = User::getPostCount();
+
+        $update = "update user set postCount = $postCount where id = $userId";
+        $stmt = $db->pdo->prepare($update);
+        $stmt->execute();
+
+        $db->close();
+    }
+
+    public static function updatePostCountById($userId) {
+        $db = new Database(User::$dbName);
+        $db->connect();
+
         $postCount = User::getPostCount();
 
         $update = "update user set postCount = $postCount where id = $userId";

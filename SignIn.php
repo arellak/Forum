@@ -105,5 +105,9 @@ function getUserIdBySessionID($sessionId) {
         $userId = $row["userId"];
     }
 
+    if($userId == "") {
+        throw new Exception("");
+    }
+
     return $userId;
 }

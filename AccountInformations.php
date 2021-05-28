@@ -2,53 +2,36 @@
 <html lang="de">
 <head>
     <title>Account Information</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p>Email: <label id="email"></label></p>
-    <p>Username: <label id="username"></label></p>
-    <p>Registration Date: <label id="registrationDate"></label></p>
-    <p>Post Count: <label id="postCount"></label></p>
+    <?php
+        include_once("MenuBar.php");
+        include_once("User.php");
+        include_once("SignIn.php");
+
+        session_start();
+        $userId = getUserIdBySessionID(session_id());
+        $user = User::loadDataById($userId);
+
+        if ($user != null) {
+            $username = $user->name;
+            $email = $user->email;
+            $registrationDate = $user->registrationDate;
+            $postCount = $user->postCount;
+        }
+
+    ?>
+
+    <p>ID: <label id="userID"><?=$userId?></label></p>
+    <p>E-Mail: <label id="email"><?=$email?></label></p>
+    <p>Benutzername: <label id="username"><?=$username?></label></p>
+    <p>Registrierungs Datum: <label id="registrationDate"><?=$registrationDate?></label></p>
+    <p>Anzahl der Beiträge: <label id="postCount"></label><?=$postCount?></p>
 
     <form method="post" action="DeleteUser.php" id="deleteUserForm">
-        <input type="submit" value="Delete" id="deleteUser" name="deleteUser">
+        <input type="submit" value="Löschen" id="deleteUser" name="deleteUser" class="submitButton">
     </form>
-
-    <a href="index.php ">Home</a>
-
-<script>
-    let emailElement = document.getElementById("email");
-    let usernameElement = document.getElementById("username");
-    let registrationDateElement = document.getElementById("registrationDate");
-    let postCountElement = document.getElementById("postCount");
-
-    let userInfos = "<?php
-            include_once("User.php");
-            include_once("SignIn.php");
-            session_start();
-            $userId = getUserIdBySessionID(session_id());
-            $user = User::loadDataById($userId);
-
-            if ($user != null) {
-                try {
-                    echo $user;
-                } catch (Exception $e) {
-                    echo "Couldn't load User: " . $e->getMessage();
-                }
-            }
-            ?>";
-
-    let userSplitted = userInfos.split(";");
-    let username = userSplitted[0];
-    let email = userSplitted[1];
-    let registrationDate = userSplitted[2];
-    let postCount = userSplitted[3];
-
-    usernameElement.innerHTML = username;
-    registrationDateElement.innerHTML = registrationDate;
-    postCountElement.innerHTML = postCount;
-    emailElement.innerHTML = email;
-</script>
 </body>
 </html>
-
-<?php

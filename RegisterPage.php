@@ -2,22 +2,19 @@
 <html lang="de">
 <head>
     <title>Registrieren</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<?php
+include("MenuBar.php");
+?>
 <form method="post" action="RegisterHandling.php" id="register">
-    <label for="fUsername">Username:</label><br>
-    <input id="fUsername" name = "fUsername" type="text" placeholder="Username"><br>
+    <input id="fUsername" name="fUsername" class="inputTextbox" type="text" placeholder="Benutzername"><br>
+    <input id="fPassword" class="inputTextbox" name="fPassword" type="password" placeholder="Passwort"><br>
+    <input id="fEmail" class="inputTextbox" name="fEmail" type="text" placeholder="E-Mail"><br>
 
-    <label for="fPassword">Password:</label><br>
-    <input id="fPassword" name = "fPassword" type="password" placeholder="Password"><br>
-
-    <label for="fEmail">E-Mail:</label><br>
-    <input id="fEmail" name = "fEmail" type="text" placeholder="E-Mail"><br>
-
-    <input type="submit" value="Register" name="registerButton" id="registerButton">
+    <input type="submit" value="Registrieren" name="registerButton" class="submitButton" id="registerButton">
 </form>
-
-<a href="index.php">Home<br></a>
 </body>
 
 </html>
