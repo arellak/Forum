@@ -5,7 +5,7 @@ include_once("User.php");
 $postId = $_POST["postId"];
 $commentAuthor = User::getUserBySessionId();
 
-$content = $_POST["commentField"];
+$content = htmlspecialchars($_POST["commentField"], ENT_QUOTES, "UTF-8");
 
 Comment::create($postId, $commentAuthor->id, $content);
 

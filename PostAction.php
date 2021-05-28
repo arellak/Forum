@@ -3,8 +3,8 @@
 include_once("CustomPost.php");
 
 try {
-    $title = $_POST["titleTf"];
-    $content = $_POST["contentTf"];
+    $title = htmlspecialchars($_POST["titleTf"], ENT_QUOTES, "UTF-8");
+    $content = htmlspecialchars($_POST["contentTf"], ENT_QUOTES, "UTF-8");
 
     if($title !== "" && $content !== "") {
         CustomPost::createPost($title, $content);
